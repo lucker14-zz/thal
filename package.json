@@ -1,0 +1,15 @@
+{
+  "name": "thal",
+  "version": "1.0.0",
+  "description": "webscrapper for Firmy.cz",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Petr Pluhar",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.0.0-rc0",
+    "puppeteer": "^0.13.0"
+  }
+}
