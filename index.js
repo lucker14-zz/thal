@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const mongoose = require('mongoose');
 const Company = require('./models/company');
 const CompanyKladno = require('./models/companyKladno');
+const LekarnaKladno = require('./models/lekarnaKladno');
 
 const COMPANY_LENGTH_SELECTOR = '#box5 > div > div.premiseListBoxes.pl-catalog > div.premiseBox'
 const COMPANY_WRAP_SELECTOR = '#box5 > div > div.premiseListBoxes.pl-catalog > div.premiseBox:nth-child(INDEX)'
@@ -19,7 +20,7 @@ const COMPANY_ADDR_STREET_SELECTOR = '#box2 > div > div.box > div.addressList > 
 const COMPANY_ADDR_ZIP_SELECTOR = '#box2 > div > div.box > div.addressList > h2 > div:nth-child(2)'
 const COMPANY_ADDR_CITY_SELECTOR = '#box2 > div > div.box > div.addressList > h2 > div:nth-child(3)'
 
-const SRC_URL = 'https://www.firmy.cz/Prvni-pomoc-a-zdravotnictvi/Prodejci-zdravotnickeho-zbozi-a-leciv/Zdravotnicke-potreby/kraj-stredocesky/kladno'
+const SRC_URL = 'https://www.firmy.cz/Prvni-pomoc-a-zdravotnictvi/Prodejci-zdravotnickeho-zbozi-a-leciv/Leky-a-farmaka/Prodejci-leku-a-farmak/Lekarny/kraj-stredocesky/kladno?prodejna'
 // const SRC_URL = 'https://www.firmy.cz/Prvni-pomoc-a-zdravotnictvi/Prodejci-zdravotnickeho-zbozi-a-leciv/Zdravotnicke-potreby/kraj-praha/'
 
 const NUMBERING_SELECTOR = '#box6 > div > div > div.results > p:nth-child(1) > strong:nth-child(5)'
@@ -236,7 +237,7 @@ function upsertCompany(companyObj) {
     let conditions = { addr: companyObj.addr };
     let options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-    CompanyKladno.findOneAndUpdate(conditions, companyObj, options, (err, result) => {
+    LekarnaKladno.findOneAndUpdate(conditions, companyObj, options, (err, result) => {
         if (err) throw err;
         console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^')
         console.log(result)
@@ -245,20 +246,20 @@ function upsertCompany(companyObj) {
 console.log('imported')
 }
 
-// data.forEach(function(item, index){
-//     delete item.dateCrawled
-//     delete item._id
-//     delete item.__v
+data.forEach(function(item, index){
+    delete item.dateCrawled
+    delete item._id
+    delete item.__v
 
-//     if(item.logo_url != null){
-//         var position_logo = item.logo_url.indexOf('?')
-//         item.logo_url = item.logo_url.substring(0, position_logo)
-//     }
+    if(item.logo_url != null){
+        var position_logo = item.logo_url.indexOf('?')
+        item.logo_url = item.logo_url.substring(0, position_logo)
+    }
 
-//     if(item.photo_url != null){
-//         var position_photo = item.photo_url.indexOf('?')
-//         item.photo_url = item.photo_url.substring(0, position_photo)
-//     }
+    if(item.photo_url != null){
+        var position_photo = item.photo_url.indexOf('?')
+        item.photo_url = item.photo_url.substring(0, position_photo)
+    }
 
-//     item.url_name = index + 1
-// })
+    item.url_name = index + 1
+})
